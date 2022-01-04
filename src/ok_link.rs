@@ -46,10 +46,14 @@ impl<T> List<T> {
         self.head.as_mut().map(|node| &mut node.elem)
     }
     pub fn iter(&self) -> Iter<T> {
-        Iter { next: self.head.as_ref().map(|node| &**node) }
+        Iter {
+            next: self.head.as_ref().map(|node| &**node),
+        }
     }
     pub fn iter_mut(&mut self) -> IterMut<T> {
-        IterMut { next: self.head.as_deref_mut() }
+        IterMut {
+            next: self.head.as_deref_mut(),
+        }
     }
 }
 
@@ -100,9 +104,7 @@ mod test {
         assert_eq!(list.peek(), Some(&3));
         assert_eq!(list.peek_mut(), Some(&mut 3));
 
-        list.peek_mut().map(|value| {
-            *value = 42
-        });
+        list.peek_mut().map(|value| *value = 42);
 
         assert_eq!(list.peek(), Some(&42));
         assert_eq!(list.pop(), Some(42));
@@ -128,9 +130,7 @@ mod test {
         list.push(3);
         let mut iter = list.iter_mut();
         assert_eq!(iter.next(), Some(&mut 3));
-        iter.next().map(|value| {
-            *value = 4
-        });
+        iter.next().map(|value| *value = 4);
         assert_eq!(list.pop(), Some(3));
         assert_eq!(list.pop(), Some(4));
         assert_eq!(list.pop(), Some(1));
